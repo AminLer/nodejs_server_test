@@ -3,7 +3,7 @@ var fs = require('fs'); //require filesystem module
 var io = require('socket.io')(http) //require socket.io module and pass the http object (server)
 
 http.listen(8080); //listen to port 8080
-
+console.log("Server running...");
 function handler (req, res) { //create server
   fs.readFile(__dirname + '/public/index.html', function(err, data) { //read file index.html in public folder
     if (err) {
