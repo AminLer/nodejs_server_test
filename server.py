@@ -27,6 +27,6 @@ class Serv(BaseHTTPRequestHandler):
 
 
 print("START SERVER")
-httpd = HTTPServer(('localhost', 8080), Serv)
+httpd = HTTPServer(('192.168.0.32', 8080), Serv)
 httpd.serve_forever()
 print("CLOSE SERVER")
