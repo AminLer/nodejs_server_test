@@ -3,23 +3,43 @@
 <body>
 
 <h1>Raspberry Pi WebServer</h1>
-<p><input type="checkbox" id="light"></p>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> <!-- include socket.io client side script -->
-<script>
-var socket = io(); //load socket.io-client and connect to the host that serves the page
-window.addEventListener("load", function(){ //when page loads
-  var lightbox = document.getElementById("light");
-  lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
-    console.log("Checkbox clicked!");
-    socket.emit("light", Number(this.checked)); //send button status to server (as 1 or 0)
+<button id="sendData">SEND DATA</button>
+<form action="/profile/index/sendmessage" method="post" enctype="application/x-www-form-urlencoded">
+  <div class="upload_form">
+      <dt id="message-label">
+        <label class="optional" for="message">Enter Message</label>
+      </dt>
+      <dd id="message-element">
+        <textarea cols="50" rows="20" id="message" name="message"></textarea>
+      </dd>
+      <dt id="id-label">&nbsp;</dt>
+      <dd id="id-element">
+        <input type="hidden" id="id" value="145198" name="id">
+      </dd>
+      <dt id="send_message-label">&nbsp;</dt>
+      <dd id="send_message-element">
+        <input type="submit" class="sendamessage" value="Send" id="send_message" name="send_message">
+      </dd>
+  </div>
+  </form>
+  
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript">
+  $("input#send_message").click(function(event) {
+  event.preventDefault();
+  
+  var message = $('textarea#message').val();
+  url = "http://localhost:8080"
+  
+  var posting = $.post(url, message)
+  
+  posting.done(function( data ) {
+    document.createElement('p').textContent = data
   });
-});
-socket.on('light', function (data) { //get button status from client
-  document.getElementById("light").checked = data; //change checkbox according to push button on Raspberry Pi
-  socket.emit("light", data); //send push button status to back to server
-});
-</script>
-
+  });
+  
+  
+  </script>
 </body>
 </html>
